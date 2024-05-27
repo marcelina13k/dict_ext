@@ -17,3 +17,18 @@ ul {
 li {
     margin-bottom: 5px;
 }
+
+#dictionaryPopup {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 14px;
+}
+#dictionaryPopup button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+#dictionaryPopup button:hover {
+    background-color: blueviolet;
+}
