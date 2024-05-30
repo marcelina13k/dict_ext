@@ -3,10 +3,10 @@
     "name": "Personal Dictionary Extension",
     "description": "A Chrome extension to compile a personal dictionary from words or phrases on webpages.",
     "version": "1.0",
-    "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
-    "background": {
-        "service_worker": "background.js"
-    },
+    "permissions": ["storage", "activeTab", "scripting", "tabs"],
+    "host_permissions": [
+        "<all_urls>"
+    ],
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
@@ -20,10 +20,14 @@
         "48": "icons/icon48.png",
         "128": "icons/icon128.png"
     },
-    "content_scripts":[
+    "content_scripts": [
         {
-            "matches":["<all_urls>"],
-            "js":["content.js"]
+            "matches": ["<all_urls>"],
+            "js": ["content.js"],
+            "css": ["styles.css"]
         }
-    ]
+    ],
+    "background": {
+        "service_worker": "background.js"
+    }
 }

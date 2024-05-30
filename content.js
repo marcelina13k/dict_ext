@@ -1,7 +1,13 @@
 // this script will detect text selection and hsow a custom popup
 
 document.addEventListener('mouseup', (event) => {
+    // Check if the event target is inside the popup
+    if (event.target.closest('#dictPopup')) {
+        return; // Don't do anything if the click is inside the popup
+    }
+
     const selectedText = window.getSelection().toString().trim();
+    console.log('Selected text:', selectedText); // Log for debugging
     if (selectedText.length > 0) {
         showPopup(event.clientX, event.clientY, selectedText);
     }
@@ -15,24 +21,28 @@ function showPopup(x, y, selectedText) {
 
     const popup = document.createElement('div');
     popup.id = 'dictPopup';
-    popup.style.position = 'absolute';
+    //popup.className = 'dict-popup'; // Add class for styling
     popup.style.left = `${x}px`;
     popup.style.top = `${y}px`;
-    popup.style.backgroundColor = '#fff';
-    popup.style.border = '1px solid #ccc';
-    popup.style.padding = '10px';
-    popup.style.boxShadow = '0px 0px 5px rgba(0, 0, 0, 0.2)';
-    popup.style.zIndex = '1000';
 
     const addButton = document.createElement('button');
-    addButton.textContent = 'Add to Dictionary';
+    //addButton.className = 'dict-popup-button'; // Add class for styling
+    addButton.textContent = 'Define';
     addButton.onclick = () => {
         addToDictionary(selectedText);
+        clearSelection();
         removePopup();
     };
 
     popup.appendChild(addButton);
     document.body.appendChild(popup);
+}
+
+function removePopup() {
+    const existingPopup = document.getElementById('dictPopup');
+    if (existingPopup) {
+      existingPopup.remove();
+    }
 }
 
 function addToDictionary(text) {
@@ -43,4 +53,13 @@ function addToDictionary(text) {
             console.log(`${text} added to dictionary`);
         });
     });
+}
+
+function clearSelection() {
+    if (window.getSelection) {
+        window.getSelection().removeAllRanges();
+    }
+    else if (document.selection) {
+        document.selection.empty();
+    }
 }
